@@ -1,0 +1,78 @@
+# -- Deploy Argo CD Applications within this helm release
+# @default -- `{}` (See [values.yaml])
+## Ref: https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/
+applications:
+  argocd:
+    project: argocd
+    namespace: argocd
+    destination:
+      namespace: argocd
+      server: https://kubernetes.default.svc
+    sources:
+      - repoURL: https://argoproj.github.io/argo-helm
+        targetRevision: 7.3.4
+        chart: argo-cd
+        helm:
+          valueFiles:
+            - $values/argocd/values.yaml
+      - repoURL: https://github.com/s-matsubara/argocd.git
+        targetRevision: main
+        ref: values
+    syncPolicy:
+      syncOptions:
+        - CreateNamespace=true
+  argocd-apps:
+    project: argocd
+    namespace: argocd
+    destination:
+      namespace: argocd
+      server: https://kubernetes.default.svc
+    sources:
+      - repoURL: https://argoproj.github.io/argo-helm
+        targetRevision: 2.0.0
+        chart: argocd-apps
+        helm:
+          valueFiles:
+            - $values/argocd-apps/values.yaml
+      - repoURL: https://github.com/s-matsubara/argocd.git
+        targetRevision: main
+        ref: values
+    syncPolicy:
+      syncOptions:
+        - CreateNamespace=true
+
+# -- Deploy Argo CD Projects within this helm release
+# @default -- `{}` (See [values.yaml])
+## Ref: https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/
+projects:
+  argocd:
+    namespace: argocd
+    additionalLabels: {}
+    additionalAnnotations: {}
+    description: Argo CD Project
+    sourceRepos:
+      - '*'
+    destinations:
+      - namespace: argocd
+        server: https://kubernetes.default.svc
+    clusterResourceWhitelist:
+      - group: '*'
+        kind: '*'
+    orphanedResources:
+      warn: false
+
+# -- Deploy Argo CD ApplicationSets within this helm release
+# @default -- `{}` (See [values.yaml])
+## Ref: https://argo-cd.readthedocs.io/en/stable/operator-manual/applicationset/
+applicationsets: {}
+
+# --  Deploy Argo CD Applications/ApplicationSets/Projects within this helm release
+# @default -- `[]` (See [values.yaml])
+## Ref: https://argo-cd.readthedocs.io/en/stable/operator-manual/applicationset/
+itemTemplates: []
+
+# -- DEPRECATED - Please refer [Deprecation Notice](https://github.com/argoproj-labs/argocd-extensions?tab=readme-ov-file#deprecation-notice) for more info.
+# @default -- `{}` (See [values.yaml])
+## This function in tech preview stage, do expect unstability or breaking changes in newer versions. Bump image.tag if necessary.
+## Ref: https://github.com/argoproj-labs/argocd-extensions
+extensions: {}
