@@ -10,7 +10,7 @@ applications:
       server: https://kubernetes.default.svc
     sources:
       - repoURL: https://argoproj.github.io/argo-helm
-        targetRevision: 7.3.4
+        targetRevision: 7.3.4  # renovate: depName=argoproj/argo-helm extractVersion=^argo-cd-(?<version>.+)$
         chart: argo-cd
         helm:
           valueFiles:
@@ -29,7 +29,7 @@ applications:
       server: https://kubernetes.default.svc
     sources:
       - repoURL: https://argoproj.github.io/argo-helm
-        targetRevision: 2.0.0
+        targetRevision: 2.0.0 # renovate: depName=argoproj/argo-helm extractVersion=^argocd-apps-(?<version>.+)$
         chart: argocd-apps
         helm:
           valueFiles:
@@ -40,6 +40,23 @@ applications:
     syncPolicy:
       syncOptions:
         - CreateNamespace=true
+  argocd-appprojects:
+    project: argocd
+    namespace: argocd
+    destination:
+      namespace: argocd
+      server: https://kubernetes.default.svc
+    source:
+      path: argocd-appprojects
+      repoURL: https://github.com/s-matsubara/argocd.git
+      targetRevision: HEAD
+      directory:
+        recurse: true
+        jsonnet: { }
+    syncPolicy:
+      automated:
+        selfHeal: true
+        prune: true
 
 # -- Deploy Argo CD Projects within this helm release
 # @default -- `{}` (See [values.yaml])
@@ -47,8 +64,8 @@ applications:
 projects:
   argocd:
     namespace: argocd
-    additionalLabels: {}
-    additionalAnnotations: {}
+    additionalLabels: { }
+    additionalAnnotations: { }
     description: Argo CD Project
     sourceRepos:
       - '*'
@@ -64,15 +81,15 @@ projects:
 # -- Deploy Argo CD ApplicationSets within this helm release
 # @default -- `{}` (See [values.yaml])
 ## Ref: https://argo-cd.readthedocs.io/en/stable/operator-manual/applicationset/
-applicationsets: {}
+applicationsets: { }
 
 # --  Deploy Argo CD Applications/ApplicationSets/Projects within this helm release
 # @default -- `[]` (See [values.yaml])
 ## Ref: https://argo-cd.readthedocs.io/en/stable/operator-manual/applicationset/
-itemTemplates: []
+itemTemplates: [ ]
 
 # -- DEPRECATED - Please refer [Deprecation Notice](https://github.com/argoproj-labs/argocd-extensions?tab=readme-ov-file#deprecation-notice) for more info.
 # @default -- `{}` (See [values.yaml])
 ## This function in tech preview stage, do expect unstability or breaking changes in newer versions. Bump image.tag if necessary.
 ## Ref: https://github.com/argoproj-labs/argocd-extensions
-extensions: {}
+extensions: { }

@@ -1,0 +1,29 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ],
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["minor", "patch"],
+      "matchCurrentVersion": "!/^0/",
+      "automerge": true
+    }
+  ],
+  "argocd": {
+    "fileMatch": [
+      "argocd-appprojects/.+\\.yaml$"
+    ]
+  },
+  "regexManagers": [
+    {
+      "datasourceTemplate": "github-releases",
+      "fileMatch": [
+        "argocd-apps/.*\\.yaml"
+      ],
+      "matchStrings": [
+        " +targetRevision: +(?<currentValue>[^'\" ]+) +# renovate: depName=(?<depName>[^ \\n]+) +(extractVersion=(?<extractVersion>[^\\n]+))?"
+      ]
+    }
+  ]
+}

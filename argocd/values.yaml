@@ -1,0 +1,13 @@
+## Argo CD configuration
+## Ref: https://github.com/argoproj/argo-cd
+## Ref: https://github.com/argoproj/argo-helm/tree/main/charts/argo-cd
+##
+
+server:
+  service:
+    type: LoadBalancer
+
+configs:
+  secret:
+    argocdServerAdminPassword: "$2a$10$Tn/FW11/Mk1iKV3bWWze7.K8IJLPex0agiBufxXAYtPuoAjsz5R8e"
+    argocdServerAdminPasswordMtime: "2006-01-02T15:04:05Z"
