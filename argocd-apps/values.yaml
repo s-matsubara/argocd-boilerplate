@@ -15,7 +15,7 @@ applications:
         helm:
           valueFiles:
             - $values/argocd/values.yaml
-      - repoURL: https://github.com/s-matsubara/argocd.git
+      - repoURL: https://github.com/s-matsubara/argocd-boilerplate.git
         targetRevision: main
         ref: values
     syncPolicy:
@@ -34,7 +34,7 @@ applications:
         helm:
           valueFiles:
             - $values/argocd-apps/values.yaml
-      - repoURL: https://github.com/s-matsubara/argocd.git
+      - repoURL: https://github.com/s-matsubara/argocd-boilerplate.git
         targetRevision: main
         ref: values
     syncPolicy:
@@ -48,7 +48,7 @@ applications:
       server: https://kubernetes.default.svc
     source:
       path: argocd-appprojects
-      repoURL: https://github.com/s-matsubara/argocd.git
+      repoURL: https://github.com/s-matsubara/argocd-boilerplate.git
       targetRevision: HEAD
       directory:
         recurse: true
