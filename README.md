@@ -28,3 +28,10 @@ $ kubectl get svc/argocd-server -nargocd
 ```bash
 htpasswd -nbBC 10 "" password | tr -d ':\n' | sed 's/$2y/$2a/'
 ```
+
+### Merge boilerplate
+```bash
+$ git remote add boilerplate git@github.com:s-matsubara/argocd-boilerplate.git
+$ git fetch boilerplate
+$ git merge boilerplate/main --allow-unrelated-histories
+```

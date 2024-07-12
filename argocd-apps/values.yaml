@@ -54,6 +54,8 @@ applications:
         recurse: true
         jsonnet: { }
     syncPolicy:
+      syncOptions:
+        - ApplyOutOfSyncOnly=true
       automated:
         selfHeal: true
         prune: true
