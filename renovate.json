@@ -10,6 +10,7 @@
       "automerge": true
     }
   ],
+  "requiredStatusChecks": null,
   "argocd": {
     "fileMatch": [
       "argocd-appprojects/.+\\.yaml$"
