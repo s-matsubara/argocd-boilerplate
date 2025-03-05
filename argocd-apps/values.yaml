@@ -10,7 +10,7 @@ applications:
       server: https://kubernetes.default.svc
     sources:
       - repoURL: https://argoproj.github.io/argo-helm
-        targetRevision: 7.8.7  # renovate: depName=argoproj/argo-helm extractVersion=^argo-cd-(?<version>.+)$
+        targetRevision: 7.8.8  # renovate: depName=argoproj/argo-helm extractVersion=^argo-cd-(?<version>.+)$
         chart: argo-cd
         helm:
           valueFiles:
